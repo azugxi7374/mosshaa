@@ -8,17 +8,25 @@
 </head>
 
 <body>
-    <h1 id="header"></h1>
-    <img id="img" crossorigin="anonymous"
-        src="https://3.bp.blogspot.com/-c3e8Wrl2bHg/VtuvVVIWcJI/AAAAAAAA4eg/_cxpr3M07hE/s800/supuer_nihonjin.png">
+    <div>
+        <input type="file" id="input-img" accept="image/*">
+    </div>
+
+    <img id="img">
 
     <canvas id="canvas"></canvas>
     <div class="color-block">
         <div class="color-square"></div>
         <div class="color-text"></div>
+        <canvas id="color-circle"></canvas>
     </div>
 
+    <div id="debugbox">
+    </div>
+
+
     <script src="main.js"></script>
+    <script src="lib.js"></script>
 </body>
 
 </html>
