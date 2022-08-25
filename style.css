@@ -1,5 +1,41 @@
+html,
+body {
+    height: 100%;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#main-tab {
+    flex: auto;
+}
+
+#main-tab>.tab-pane {
+    height: 100%;
+}
+
+div#tab-color-pane.active {
+    display: flex;
+    flex-direction: column;
+}
+
+#main-canvas-container {
+    flex: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.color-container {
+    flex: 4;
+}
+
 canvas {
     border: 1px solid red;
+
 }
 
 .color-square {
