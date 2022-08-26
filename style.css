@@ -31,21 +31,18 @@ div#tab-color-pane.active {
 
 .color-container {
     flex: 4;
+    display: flex;
+    justify-content: center;
 }
 
-canvas {
-    border: 1px solid red;
-
-}
-
-.color-square {
-    width: 100px;
+.color-container>* {
     height: 100px;
 }
 
-.color-text {
-    height: 100px;
+.color-text>span {
+    display: block;
 }
+
 
 #img {
     width: 1px;

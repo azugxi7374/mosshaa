@@ -39,24 +39,34 @@ function main() {
         })
     }
 
-    inputImg.addEventListener('change', (e) => {
-        const image = new Image();
+    function loadImage(loadedImage) {
+        log("load")
+        state.image = loadedImage;
 
+        redrawMainCanvas();
+        renderColorInfo(0, 0, 0);
+    }
+
+    inputImg.addEventListener('change', (e) => {
         const file = e.target.files[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
+            const image = new Image();
             image.src = reader.result;
+            image.onload = () => {
+                loadImage(image);
+            }
         }
+    });
 
-        image.onload = () => {
-            log("load")
-            state.image = image;
-
-            redrawMainCanvas();
-
-            // a();
-        }
+    document.getElementById("input-btn-usesample").addEventListener('click', () => {
+        const image = document.getElementById("img-sample1");
+        image.onload = () => { loadImage(image) };
+        // ↓loadedを再発行
+        const src = image.src;
+        image.src = "";
+        image.src = src;
     });
     /*
     const iobs = new IntersectionObserver((entries, observer) => {

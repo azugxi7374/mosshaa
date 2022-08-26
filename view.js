@@ -104,11 +104,18 @@ function renderColorCircle(size, r, g, b) {
 }
 
 function renderColorInfo(r, g, b) {
-    const cs = document.querySelector('.color-square');
+    // const cs = document.querySelector('.color-square');
     const ct = document.querySelector('.color-text');
     const clrcd = toColorCode(r, g, b);
-    cs.style = `background-color:${clrcd}`;
-    ct.innerText = clrcd;
+    const [h, s, v] = rgb2hsv(r, g, b);
+    // cs.style = `background-color:${clrcd}`;
+    ct.innerHTML = `
+    <span>
+    <span style="display:inline-block; height:1em; width:1em; background-color:${clrcd};"> </span>
+    <span> ${clrcd} </span>
+    </span>
+    <span> R${r}, G${g}, B${b} </span>
+    <span> H${parseInt(h)}, S${parseInt(s * 100)}%, V${parseInt(v * 100)}% </span>`
     renderColorCircle(100, r, g, b)
     //    drawLine(context, x, y, e.offsetX, e.offsetY);
 }

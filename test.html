@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello OpenCV.js</title>
+</head>
+
+<body>
+    <script onload="onOpenCvReady();" src="https://docs.opencv.org/3.4.0/opencv.js" async=""
+        type="text/javascript"></script>
+    <h1>K Means Example</h1>
+    <p id="status">OpenCV.js is loading...</p>
+    <div>
+        <div class="inputoutput"><img id="imageSrc" src="img/sample1.png" style="width:300px;" />
+            <div class="caption">imageSrc <input id="fileInput" name="file" type="file" /></div>
+        </div>
+        <div class="inputoutput"><canvas id="canvasOutput"></canvas>
+            <div class="caption">canvasOutput</div>
+        </div>
+        <script type="text/javascript">
+            function main() {
+                let imgElement = document.getElementById('imageSrc');
+
+                let mat = cv.imread(imgElement);
+
+                // resize
+                const _size = mat.rows * mat.cols;
+                if (_size > 300 * 300) {
+                    const scale = ((300 * 300) / _size) ** (1 / 2);
+
+                    const dst = new cv.Mat();
+                    const dsize = new cv.Size(mat.rows * scale, mat.cols * scale);
+                    cv.resize(mat, dst, dsize, 0, 0, cv.INTER_AREA);
+                    mat.delete();
+                    mat = dst;
+                }
+
+
+                // sampleをとる
+                let sample = new cv.Mat(mat.rows * mat.cols, 3, cv.CV_32F);
+                for (var y = 0; y < mat.rows; y++)
+                    for (var x = 0; x < mat.cols; x++)
+                        for (var z = 0; z < 3; z++)
+                            sample.floatPtr(y + x * mat.rows)[z] = mat.ucharPtr(y, x)[z];
+
+                var clusterCount = 8;
+                var labels = new cv.Mat();
+                var attempts = 5;
+                var centers = new cv.Mat();
+
+                var crite = new cv.TermCriteria(cv.TermCriteria_EPS + cv.TermCriteria_MAX_ITER, 10000, 0.0001);
+                var criteria = [1, 10, 0.0001];
+
+                ///////////////////
+                cv.kmeans(sample, clusterCount, labels, crite, attempts, cv.KMEANS_RANDOM_CENTERS, centers);
+                ///////////////
+
+                var newImage = new cv.Mat(mat.size(), mat.type());
+                for (var y = 0; y < mat.rows; y++)
+                    for (var x = 0; x < mat.cols; x++) {
+                        var cluster_idx = labels.intAt(y + x * mat.rows, 0);
+                        newImage.floatPtr(y, x)[0] = centers.floatAt(cluster_idx, 0);
+                        newImage.floatPtr(y, x)[1] = centers.floatAt(cluster_idx, 1);
+                        newImage.floatPtr(y, x)[2] = centers.floatAt(cluster_idx, 2);
+                        newImage.floatPtr(y, x)[3] = 255;
+
+                    }
+                cv.imshow('canvasOutput', newImage);
+
+                console.log(centers);
+                window.g = {}
+                window.g.centers = centers
+
+                mat.delete();
+            }
+
+            function onOpenCvReady() {
+                document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+                // document.onload = () => {
+                main();
+                //}
+            }
+        </script>
+    </div>
+</body>
+
+</html>
