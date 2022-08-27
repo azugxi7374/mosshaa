@@ -1,3 +1,6 @@
+
+const [onOpenCvReady, opencvReady] = onloadWrapper()
+
 const state = {
     image: null,
     canvas: {
@@ -6,6 +9,12 @@ const state = {
     },
     inputImg: null,
 }
+
+opencvReady.then(() => {
+
+    console.log("opencv ready!");
+});
+
 
 function checkReload() {
     const searchmap = Object.fromEntries(document.location.search.slice(1).split("&").map(a => a.split("=")));
@@ -39,12 +48,35 @@ function main() {
         })
     }
 
+
+
+
     function loadImage(loadedImage) {
         log("load")
         state.image = loadedImage;
 
         redrawMainCanvas();
         renderColorInfo(0, 0, 0);
+
+        // clustering
+        opencvReady.then(() => {
+            function f() {
+                console.log("clustering start");
+                const { labels, centers } = kmeans(state.canvas.canvas, 5);
+                console.log("clustering end");
+
+                const labelsCount = centers.map(_ => 0);
+                labels.forEach(l1 => l1.forEach(k => labelsCount[k]++));
+                const labelsRate = labelsCount.map(v => v / (labels.length * labels[0].length));
+
+                const dist = centers.map((rgb0, k) => [rgb0, labelsRate[k]]);
+                window.g = { ...window.g, centers, dist }
+                dist.sort((a, b) => b[1] - a[1]);
+                renderColorDistBar(dist);
+            }
+            // TODO もっとマシな方法で非同期にする
+            setTimeout(f, 1500)
+        });
     }
 
     inputImg.addEventListener('change', (e) => {

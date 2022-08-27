@@ -23,14 +23,13 @@ div#tab-color-pane.active {
 }
 
 #main-canvas-container {
-    flex: 5;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .color-container {
-    flex: 4;
     display: flex;
     justify-content: center;
 }
@@ -43,6 +42,11 @@ div#tab-color-pane.active {
     display: block;
 }
 
+.color-dist-container>.color-dist {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+}
 
 #img {
     width: 1px;

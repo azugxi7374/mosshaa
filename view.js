@@ -20,6 +20,8 @@ function redrawMainCanvas() {
         canvas.width = w;
         // console.log("redrawMainCanvas", cw, ch, iw, ih, scale, w, h)
         ctx.drawImage(image, 0, 0, w, h);
+
+
     } else {
         // TODO
     }
@@ -119,3 +121,24 @@ function renderColorInfo(r, g, b) {
     renderColorCircle(100, r, g, b)
     //    drawLine(context, x, y, e.offsetX, e.offsetY);
 }
+
+// [[rgb, rate], ...]
+function renderColorDistBar(dist) {
+    const ctn = document.querySelector(".color-dist");
+    ctn.innerHTML = "";
+    console.log(dist)
+    for (const [[r, g, b], rate] of dist) {
+        console.log(r, g, b, rate);
+        const rp = parseInt(rate * 100)
+        const clcd = toColorCode(r, g, b);
+        ctn.innerHTML +=
+            `<div style="width:${rp}%; display:flex; flex-direction:column">
+            <div style="background-color:${clcd}; height:24px;"></div>
+            <div>${clcd} ${rp}%</div>
+        </div>`
+    }
+}
+
+
+
+

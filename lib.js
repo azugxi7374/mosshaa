@@ -6,6 +6,16 @@ function log(...data) {
     }
 }
 
+// return [resolver, promise]
+function onloadWrapper() {
+    let res;
+    const p = new Promise((resolve, reject) => {
+        res = resolve;
+    });
+    return [res, p]
+}
+
+
 function toColorCode(r, g, b) {
     return "#" + [r, g, b].map((x) => parseInt((x + 256)).toString(16).slice(1)).join("");
 }
@@ -88,3 +98,5 @@ function rgb2hsv(r, g, b) {
 
     return [h, s, v];
 }
+
+
