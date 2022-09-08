@@ -1,4 +1,4 @@
-function log(...data) {
+export function log(...data) {
     console.log(...data);
     const db = document.getElementById('debugbox');
     if (db) {
@@ -7,7 +7,7 @@ function log(...data) {
 }
 
 // return [resolver, promise]
-function onloadWrapper() {
+export function onloadWrapper() {
     let res;
     const p = new Promise((resolve, reject) => {
         res = resolve;
@@ -16,12 +16,12 @@ function onloadWrapper() {
 }
 
 
-function toColorCode(r, g, b) {
+export function toColorCode(r, g, b) {
     return "#" + [r, g, b].map((x) => parseInt((x + 256)).toString(16).slice(1)).join("");
 }
 
 // https://lab.syncer.jp/Web/JavaScript/Snippet/67/
-function hsv2rgb(h, s, v) {
+export function hsv2rgb(h, s, v) {
     var h = h / 60;
     if (s == 0) return [v * 255, v * 255, v * 255];
 
@@ -64,7 +64,7 @@ function hsv2rgb(h, s, v) {
     });
 }
 
-function rgb2hsv(r, g, b) {
+export function rgb2hsv(r, g, b) {
     var r = r / 255;
     var g = g / 255;
     var b = b / 255;

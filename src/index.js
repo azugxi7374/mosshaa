@@ -1,7 +1,13 @@
+import { kmeans } from "./clustering";
+import { log, onloadWrapper } from "./lib";
+import { renderColorInfo, redrawMainCanvas, renderColorDistBar } from "./view";
 
-const [onOpenCvReady, opencvReady] = onloadWrapper()
 
-const state = {
+export const [onOpenCvReady, opencvReady] = onloadWrapper()
+// TODO
+window.onOpenCvReady = onOpenCvReady;
+
+export const state = {
     image: null,
     canvas: {
         container: null,
@@ -9,6 +15,8 @@ const state = {
     },
     inputImg: null,
 }
+// TODO
+window.state = state;
 
 opencvReady.then(() => {
 

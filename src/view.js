@@ -1,4 +1,4 @@
-function redrawMainCanvas() {
+export function redrawMainCanvas() {
     const image = state.image;
     const { container: ctn, canvas } = state.canvas || {};
 
@@ -27,7 +27,7 @@ function redrawMainCanvas() {
     }
 }
 
-function renderColorCircle(size, r, g, b) {
+export function renderColorCircle(size, r, g, b) {
     const clrc = document.getElementById('color-circle');
     clrc.width = size; clrc.height = size;
     const ctx = clrc.getContext('2d');
@@ -105,7 +105,7 @@ function renderColorCircle(size, r, g, b) {
     log({ r, g, b, h, s, v });
 }
 
-function renderColorInfo(r, g, b) {
+export function renderColorInfo(r, g, b) {
     // const cs = document.querySelector('.color-square');
     const ct = document.querySelector('.color-text');
     const clrcd = toColorCode(r, g, b);
@@ -123,7 +123,7 @@ function renderColorInfo(r, g, b) {
 }
 
 // [[rgb, rate], ...]
-function renderColorDistBar(dist) {
+export function renderColorDistBar(dist) {
     const ctn = document.querySelector(".color-dist");
     ctn.innerHTML = "";
     console.log(dist)

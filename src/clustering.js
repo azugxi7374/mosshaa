@@ -1,4 +1,4 @@
-function kmeans(imgElement, clusterCount) {
+export function kmeans(imgElement, clusterCount) {
     let mat = cv.imread(imgElement);
 
     // resize
